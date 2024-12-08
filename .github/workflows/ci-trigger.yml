@@ -21,4 +21,4 @@ jobs:
             -H "Authorization: ${{ secrets.PAT }}" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
             https://api.github.com/repos/cwlu2001/docker-build/actions/workflows/selfsigned-ssl.yml/dispatches \
-            -d '{"ref":"master",inputs:{"tag":"'$TAG'"}}
+            -d '{"ref":"master","inputs":{"tag":"'$TAG'"}}
