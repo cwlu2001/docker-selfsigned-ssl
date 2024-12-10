@@ -1,5 +1,26 @@
 #!/bin/sh
+DAYS=${DAYS:-365}
+CN=${CN:-example.site}
+SUBJ="/CN=$CN"
+
+if [ -n "${OU}" ]; then
+    SUBJ="$SUBJ/OU=$OU"
+fi
+if [ -n "${O}" ]; then
+    SUBJ="$SUBJ/O=$O"
+fi
+if [ -n "${L}" ]; then
+    SUBJ="$SUBJ/L=$L"
+fi
+if [ -n "${ST}" ]; then
+    SUBJ="$SUBJ/ST=$ST"
+fi
+if [ -n "${C}" ]; then
+    SUBJ="$SUBJ/C=$C"
+fi
+
 echo "[!] Generating certificate"
+echo "The subject is: $SUBJ"
 openssl req \
     -x509 \
     -newkey ec \
@@ -9,7 +30,4 @@ openssl req \
     -nodes \
     -keyout key.pem \
     -out cert.pem \
-    -subj "/CN=$CN/OU=$OU/O=$O/L=$L/ST=$ST/C=$C"
-
-echo -e "\n\n[!] Generating dhparam"
-openssl dhparam -out dhparam.pem 2048
+    -subj $SUBJ
